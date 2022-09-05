@@ -12,7 +12,7 @@ import (
 // Number of philosophers is simply the length of this list.
 var ph = []string{"Mark", "Russell", "Rocky", "Haris", "Root"}
 
-const hunger = 3                // Number of times each philosopher eats
+const hunger = 5               // Number of times each philosopher eats
 const think = time.Second / 100 // Mean think time
 const eat = time.Second / 100   // Mean eat time
 
