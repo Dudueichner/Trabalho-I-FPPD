@@ -3,6 +3,8 @@ from time import sleep
 from threading import Thread, Lock
 
 pratos = [0, 0, 0, 0, 0]  # 0 = Não comeu, 1 = Já comeu
+
+
 class Filosofo(Thread):
     execute = True  # variável para realizar a execução
 
@@ -17,7 +19,7 @@ class Filosofo(Thread):
         instância criada. """
         while self.execute:
             print(f"\n {self.nome} está pensando")
-            #sleep(uniform(5, 15))
+            sleep(uniform(5, 15))
             self.comer()
 
     def comer(self):
@@ -38,7 +40,7 @@ class Filosofo(Thread):
             return  # volta a pensar
 
         print(f"\n {self.nome} começou a comer")
-        #sleep(uniform(5, 10))
+        sleep(uniform(5, 10))
         print(f"\n {self.nome} parou de comer")
         pratos[nomes.index(self.nome)] += 1  # contabiliza o número de vezes que cada filosofo comeu
         print(pratos)
@@ -54,8 +56,8 @@ for _ in range(50):
     for filosofo in mesa:
         try:
             filosofo.start()  # inicia o objeto de thread criado.
-            #sleep(2)
+            sleep(2)
         except RuntimeError:  # Se a thread já tiver sido iniciada
             pass
-    #sleep(uniform(5, 15))
+    sleep(uniform(5, 15))
     Filosofo.execute = False  # Para a execução
