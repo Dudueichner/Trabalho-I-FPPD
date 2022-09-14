@@ -10,8 +10,7 @@ var(
 	thinkTime = time.Millisecond
 	eatTime = time.Millisecond
 	getForkTime = time.Millisecond
-	repetitions = 2
-)
+	repetitions = 500
 
 // Philosopher struct contains name, fork channel, neighbor philosopher
 // fork channel is used for demonstrate if the fork of the philosopher available
@@ -103,13 +102,17 @@ func main() {
 			// dine occur concurrently
 			go phil.dine(announce)
 		}
+		for i := 0; i < len(names); i++ {
+			phil := <-announce
+			fmt.Printf("%v is done dining. \n", phil.name)
+		}
 	}
 	// the announce channel will get the philosophers who finish dining sequentially in concurrent dine()
 	// print out them concurrently
-	for i := 0; i < len(names); i++ {
-		phil := <-announce
-		fmt.Printf("%v is done dining. \n", phil.name)
-	}
+	//for i := 0; i < len(names); i++ {
+	//	phil := <-announce
+	//	fmt.Printf("%v is done dining. \n", phil.name)
+	//}
 	execTime := time.Since(start)
 	fmt.Printf("Tempo de execucao: %s", execTime)
 }

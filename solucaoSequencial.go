@@ -7,7 +7,7 @@ import (
 
 var (
 	phil = []string{"Aristoteles", "Platao", "Socrates", "Tales", "Nietzsche"}
-	repeticoes = 1
+	repeticoes = 500
 	tempoDeSleep = time.Millisecond
 )
 
