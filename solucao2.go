@@ -2,8 +2,15 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
+	//"math/rand"
 	"time"
+)
+
+var(
+	thinkTime = time.Millisecond
+	eatTime = time.Millisecond
+	getForkTime = time.Millisecond
+	repetitions = 2
 )
 
 // Philosopher struct contains name, fork channel, neighbor philosopher
@@ -24,19 +31,21 @@ func makePhilosopher(name string, neighbor *Philosopher) *Philosopher {
 // A function simulating thinking
 func (phil *Philosopher) think() {
 	fmt.Printf("%v is thinking.\n", phil.name)
-	time.Sleep(time.Duration(rand.Int63n(1e9)))
+	//time.Sleep(time.Duration(rand.Int63n(1e9)))
+	time.Sleep(thinkTime)
 }
 
 // A function simulating eating
 func (phil *Philosopher) eat() {
 	fmt.Printf("%v is eating. \n", phil.name)
-	time.Sleep(time.Duration(rand.Int63n(1e9)))
+	//time.Sleep(time.Duration(rand.Int63n(1e9)))
+	time.Sleep(eatTime)
 }
 
 func (phil *Philosopher) getForks() {
 	// Declare a channal indicating timeout
 	timeout := make(chan bool, 1)
-	go func() { time.Sleep(1e9); timeout <- true }()
+	go func() { /*time.Sleep(1e9)*/ time.Sleep(getForkTime); timeout <- true }()
 	// taking the fork; fork is not available
 	<-phil.fork
 	fmt.Printf("%v got his fork. \n", phil.name)
@@ -73,8 +82,9 @@ func (phil *Philosopher) dine(announce chan *Philosopher) {
 }
 
 func main() {
-	names := []string{"Phil 1", "Phil 2", "Phil 3", "Phil 4",
-		"Phil 5", "Phil 6", "Phil 7", "Phil 8"}
+	/* names := []string{"Phil 1", "Phil 2", "Phil 3", "Phil 4",
+		"Phil 5", "Phil 6", "Phil 7", "Phil 8"} */
+	names := []string{"Phil 1", "Phil 2", "Phil 3", "Phil 4", "Phil 5"}
 	philosophers := make([]*Philosopher, len(names))
 	var phil *Philosopher
 	// link all philosophers together
@@ -87,9 +97,11 @@ func main() {
 	fmt.Printf("There are %v philosophers sitting at a table.\n", len(names))
 	fmt.Println("They each have one fork, and must borrow from their neighbor to eat.")
 	announce := make(chan *Philosopher)
-	for _, phil := range philosophers {
-		// dine occur concurrently
-		go phil.dine(announce)
+	for i := 0; i < repetitions; i++ {
+		for _, phil := range philosophers {
+			// dine occur concurrently
+			go phil.dine(announce)
+		}
 	}
 	// the announce channel will get the philosophers who finish dining sequentially in concurrent dine()
 	// print out them concurrently

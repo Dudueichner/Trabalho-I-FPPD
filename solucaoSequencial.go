@@ -8,6 +8,7 @@ import (
 var (
 	phil = []string{"Aristoteles", "Platao", "Socrates", "Tales", "Nietzsche"}
 	repeticoes = 1
+	tempoDeSleep = time.Millisecond
 )
 
 func eat(name string){
@@ -29,7 +30,7 @@ func main(){
 				}
 			}
 			fmt.Println("<----------------------------------->")
-			time.Sleep(time.Second)
+			time.Sleep(tempoDeSleep)
 		}	
 	}
 	

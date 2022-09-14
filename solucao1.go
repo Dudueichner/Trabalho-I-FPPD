@@ -1,9 +1,9 @@
 package main
 
 import (
-	"hash/fnv"
+	//"hash/fnv"
 	"log"
-	"math/rand"
+	//"math/rand"
 	"os"
 	"sync"
 	"time"
@@ -13,8 +13,8 @@ import (
 var ph = []string{"Mark", "Russell", "Rocky", "Haris", "Root"}
 
 const hunger = 5               // Number of times each philosopher eats
-const think = time.Second / 100 // Mean think time
-const eat = time.Second / 100   // Mean eat time
+const think = time.Millisecond // Mean think time
+const eat = time.Millisecond   // Mean eat time
 
 var fmt = log.New(os.Stdout, "", 0)
 
@@ -22,22 +22,24 @@ var dining sync.WaitGroup
 
 func diningProblem(phName string, dominantHand, otherHand *sync.Mutex) {
 	fmt.Println(phName, "Seated")
-	h := fnv.New64a()
-	h.Write([]byte(phName))
-	rg := rand.New(rand.NewSource(int64(h.Sum64())))
-	rSleep := func(t time.Duration) {
+	//h := fnv.New64a()
+	//h.Write([]byte(phName))
+	//rg := rand.New(rand.NewSource(int64(h.Sum64())))
+	/*rSleep := func(t time.Duration) {
 		time.Sleep(t/2 + time.Duration(rg.Int63n(int64(t))))
-	}
+	}*/
 	for h := hunger; h > 0; h-- {
 		fmt.Println(phName, "Hungry")
 		dominantHand.Lock() // pick up forks
 		otherHand.Lock()
 		fmt.Println(phName, "Eating")
-		rSleep(eat)
+		//rSleep(eat)
+		time.Sleep(eat)
 		dominantHand.Unlock() // put down forks
 		otherHand.Unlock()
 		fmt.Println(phName, "Thinking")
-		rSleep(think)
+		//rSleep(think)
+		time.Sleep(think)
 	}
 	fmt.Println(phName, "Satisfied")
 	dining.Done()
