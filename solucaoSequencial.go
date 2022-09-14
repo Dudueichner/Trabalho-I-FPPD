@@ -21,6 +21,7 @@ func think(name string){
 
 func main(){
 
+	start := time.Now()
 	for k := 0; k < repeticoes; k++ {
 		for i := 0; i < len(phil); i++ {
 			eat(phil[i])
@@ -33,5 +34,6 @@ func main(){
 			time.Sleep(tempoDeSleep)
 		}	
 	}
-	
+	execTime := time.Since(start)
+	fmt.Printf("Tempo de execucao: %s", execTime)
 }

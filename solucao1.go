@@ -47,6 +47,7 @@ func diningProblem(phName string, dominantHand, otherHand *sync.Mutex) {
 }
 
 func main() {
+	start := time.Now()
 	fmt.Println("Table empty")
 	dining.Add(5)
 	fork0 := &sync.Mutex{}
@@ -59,4 +60,6 @@ func main() {
 	go diningProblem(ph[0], fork0, forkLeft)
 	dining.Wait() // wait for philosphers to finish
 	fmt.Println("Table empty")
+	execTime := time.Since(start)
+	fmt.Printf("Tempo de execucao: %s", execTime)
 }

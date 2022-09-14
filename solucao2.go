@@ -84,6 +84,7 @@ func (phil *Philosopher) dine(announce chan *Philosopher) {
 func main() {
 	/* names := []string{"Phil 1", "Phil 2", "Phil 3", "Phil 4",
 		"Phil 5", "Phil 6", "Phil 7", "Phil 8"} */
+	start := time.Now()
 	names := []string{"Phil 1", "Phil 2", "Phil 3", "Phil 4", "Phil 5"}
 	philosophers := make([]*Philosopher, len(names))
 	var phil *Philosopher
@@ -109,4 +110,6 @@ func main() {
 		phil := <-announce
 		fmt.Printf("%v is done dining. \n", phil.name)
 	}
+	execTime := time.Since(start)
+	fmt.Printf("Tempo de execucao: %s", execTime)
 }
